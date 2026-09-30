@@ -18,3 +18,8 @@ Every email was seen on a public page fetched during research: GitHub organizati
 pip install openpyxl
 python3 research/build.py --write 1540   # 1540 = approximate number of candidates screened
 ```
+
+## Invoice AI automation prospects
+- `Germany_US_UK_Invoice_AI_Automation_Prospects_1000.xlsx`: 1,074 unique prospects, sender Oseni Ibrahim (AI Automation Specialist). It has two sheets, "Invoice Automation Prospects" and "Research Summary".
+- `Germany_US_UK_Invoice_AI_Automation_Prospects_1000_Victor_Nweze.xlsx`: the earlier version signed by Victor Nweze. It does not include the email enrichment pass.
+- To rebuild: `python3 research_invoice/build_inv.py --write --screened 4500 --out Germany_US_UK_Invoice_AI_Automation_Prospects_1000.xlsx`. Enrichment results are merged with `research_invoice/merge_enrichment.py`.

@@ -1,6 +1,6 @@
 # Research brief: Invoice AI automation prospects (OpenClaw agents)
 
-Sender: Victor Nweze, AI Automation Specialist. Offer: OpenClaw-based AI agent development for invoice management,
+Sender: Oseni Ibrahim, AI Automation Specialist. Offer: OpenClaw-based AI agent development for invoice management,
 reporting, finance operations, billing workflows and business automation (invoice intake/extraction, status tracking,
 overdue follow-ups, payment reminders, AR reporting, reconciliation, CRM/ERP/accounting sync, finance alerts,
 management summaries, invoice search assistant).
@@ -53,14 +53,14 @@ contact limited; Low = limited), notes.
 "Hi <First Name>," only if first_name is a verified name, else "Hello," or "Hello <Company> team,".
 Specific observation -> connect their product/workflow to an automation opportunity -> "I build OpenClaw-based AI agents
 that ..." (only relevant workflows) -> one simple question -> sign-off exactly:
-"Best,\nVictor Nweze\nAI Automation Specialist". Use \n for line breaks. No placeholders. Don't claim they lack
+"Best,\nOseni Ibrahim\nAI Automation Specialist". Use \n for line breaks. No placeholders. Don't claim they lack
 automation. Banned words: seamless, tailored, stunning, revolutionize, game changer, cutting edge, unlock, supercharge,
 transform your business, leverage. Each email and subject different.
 
 Finish with a short summary: accepted (with/without email), rejected + main reasons, searches used, output path.
 
 ## ROUND 3 ADDENDUM
-- SENDER IS NOW: Victor Nweze, AI Automation Specialist. Sign-off exactly "Best,\nVictor Nweze\nAI Automation Specialist".
+- SENDER IS NOW: Oseni Ibrahim, AI Automation Specialist. Sign-off exactly "Best,\nOseni Ibrahim\nAI Automation Specialist".
 - Do NOT add any company listed in inv/existing_inv.txt (check company name, website, email domain), and check all
   inv/leads/*.jsonl before each add (other round-3 agents write r3_*.jsonl in parallel).
 - Search-snippet verification is allowed when the snippet quotes the company's OWN page (contact/about/imprint/legal):

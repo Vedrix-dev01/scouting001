@@ -60,7 +60,7 @@ for r in raw:
     if not (r.get("source_url") or "").startswith("http"): probs.append("no source url")
     body=r.get("email_body","")
     if re.search(r"\[[^\]]+\]",body) or "<First" in body: probs.append("unresolved placeholder")
-    if "Victor Nweze" not in body: probs.append("missing signature")
+    if "Oseni Ibrahim" not in body: probs.append("missing signature")
     for fld in ("subject_line","email_body","personalized_opening"):
         for b in BANNED:
             if b in (r.get(fld) or "").lower(): probs.append("banned word '%s'"%b)
