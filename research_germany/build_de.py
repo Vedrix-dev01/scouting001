@@ -39,7 +39,7 @@ for r in raw:
     for fld in ("subject_line","email_body","personalized_opening"):
         for b in BANNED:
             if b in (r.get(fld) or "").lower(): probs.append("banned '%s' in %s"%(b,fld))
-    if "Oseni Ibrahim" not in r.get("email_body",""): probs.append("missing signature")
+    if "Victor Nweze" not in r.get("email_body",""): probs.append("missing signature")
     if r.get("research_confidence")=="Low" or r.get("buying_intent")=="Low" and False: pass
     keys=[("e",em),("w",dom(r.get("website","")) or None),("c",nco(r.get("company")) or None)]
     ed=em.split("@")[-1]

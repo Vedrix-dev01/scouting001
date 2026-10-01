@@ -1,6 +1,6 @@
 # Research brief: German real estate prospects (Real Estate Social Media Automation)
 
-Sender: Oseni Ibrahim, Real Estate Automation Specialist. Service: turns property data (new listings, price changes,
+Sender: Victor Nweze, Real Estate Automation Specialist. Service: turns property data (new listings, price changes,
 sold/rented, open houses, videos) into ready-to-review social posts, captions, hashtags and schedules for Instagram,
 Facebook, LinkedIn — via n8n/Make/Zapier/API workflows. Positioned as automation/technology, NOT a social media manager.
 
@@ -56,7 +56,7 @@ Greeting; one specific verified observation; the manual-work problem (neue Objek
 für Instagram/Facebook/LinkedIn aufbereiten); brief automation explanation (aus vorhandenen Objektdaten automatisch
 Entwürfe für Beiträge, Captions, Hashtags, Planung — z. B. per n8n/Make/Schnittstelle zum Maklersystem); one concrete
 example tailored to them; soft CTA question; closing:
-"Mit freundlichen Grüßen\nOseni Ibrahim\nReal Estate Automation Specialist"
+"Mit freundlichen Grüßen\nVictor Nweze\nReal Estate Automation Specialist"
 Use \n for line breaks. Vary wording per prospect — no two emails alike. No promises of sales/leads/results, no urgency,
 no hype ("revolutionär", "garantiert", "mehr Umsatz", "Leads garantiert"). Natural German, not translated-sounding.
 Subject examples to vary from: "Social Media für Ihre Objekte in <Stadt>", "Neue Objekte von <Firma> automatisch als Beitrag" — make each unique.
