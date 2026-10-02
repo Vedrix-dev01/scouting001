@@ -63,10 +63,18 @@
    "msg": "1a0fbc80a5086b6f",
    "thread": "1a0fbc80a5086b6f",
    "sent_at": "2026-10-02T08:43:56.696784+00:00"
+  },
+  "9": {
+   "email": "office@fiskaly.com",
+   "company": "fiskaly",
+   "msg": "1a0fc0eb3cf06ec6",
+   "thread": "1a0fc0eb3cf06ec6",
+   "sent_at": "2026-10-02T10:00:23.057197+00:00"
   }
  },
  "status": {
   "hello@antonpayments.com": "bounced",
-  "support@chargebee.com": "replied"
+  "support@chargebee.com": "replied",
+  "support@servicem8.com": "replied"
  }
 }
