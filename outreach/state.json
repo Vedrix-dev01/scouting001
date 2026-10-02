@@ -70,6 +70,13 @@
    "msg": "1a0fc0eb3cf06ec6",
    "thread": "1a0fc0eb3cf06ec6",
    "sent_at": "2026-10-02T10:00:23.057197+00:00"
+  },
+  "10": {
+   "email": "support@flinkest.io",
+   "company": "flinkest FlexCo",
+   "msg": "1a0fc25d9178bcfc",
+   "thread": "1a0fc25d9178bcfc",
+   "sent_at": "2026-10-02T10:25:37.952901+00:00"
   }
  },
  "status": {
