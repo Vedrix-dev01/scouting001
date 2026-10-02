@@ -42,9 +42,17 @@
    "msg": "1a0f9c568bcf47cd",
    "thread": "1a0f9c568bcf47cd",
    "sent_at": "2026-10-01T23:21:21.537532+00:00"
+  },
+  "3": {
+   "email": "matt@ledgius.com",
+   "company": "Ledgius Pty Ltd",
+   "msg": "1a0fa66a38abae6f",
+   "thread": "1a0fa66a38abae6f",
+   "sent_at": "2026-10-02T02:17:13.778501+00:00"
   }
  },
  "status": {
-  "hello@antonpayments.com": "bounced"
+  "hello@antonpayments.com": "bounced",
+  "support@chargebee.com": "replied"
  }
 }
