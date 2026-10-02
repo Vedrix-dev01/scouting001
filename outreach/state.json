@@ -89,6 +89,7 @@
  "status": {
   "hello@antonpayments.com": "bounced",
   "support@chargebee.com": "replied",
-  "support@servicem8.com": "replied"
+  "support@servicem8.com": "replied",
+  "hello@coalesc.ai": "bounced"
  }
 }
