@@ -217,6 +217,13 @@
    "msg": "1a10c44e78725483",
    "thread": "1a10c44e78725483",
    "sent_at": "2026-10-05T13:33:29.771660+00:00"
+  },
+  "22": {
+   "email": "info@janeapp.com",
+   "company": "Jane",
+   "msg": "1a10c5c54171f0ea",
+   "thread": "1a10c5c54171f0ea",
+   "sent_at": "2026-10-05T13:59:03.832380+00:00"
   }
  },
  "status": {
