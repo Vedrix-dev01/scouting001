@@ -224,6 +224,13 @@
    "msg": "1a10c5c54171f0ea",
    "thread": "1a10c5c54171f0ea",
    "sent_at": "2026-10-05T13:59:03.832380+00:00"
+  },
+  "23": {
+   "email": "devservices@getjobber.com",
+   "company": "Jobber",
+   "msg": "1a10c87f8155e761",
+   "thread": "1a10c87f8155e761",
+   "sent_at": "2026-10-05T14:46:46.762751+00:00"
   }
  },
  "status": {
@@ -231,6 +238,7 @@
   "support@chargebee.com": "replied",
   "support@servicem8.com": "replied",
   "hello@coalesc.ai": "bounced",
-  "hello@uptickhq.com": "replied"
+  "hello@uptickhq.com": "replied",
+  "info@janeapp.com": "bounced"
  }
 }
