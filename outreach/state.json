@@ -371,6 +371,13 @@
    "msg": "1a112edbc39f0ab2",
    "thread": "1a112edbc39f0ab2",
    "sent_at": "2026-10-06T20:35:35.239659+00:00"
+  },
+  "118": {
+   "email": "devx@nmi.com",
+   "company": "NMI",
+   "msg": "1a11307fa44abaed",
+   "thread": "1a11307fa44abaed",
+   "sent_at": "2026-10-06T21:04:18.139226+00:00"
   }
  },
  "status": {
@@ -383,6 +390,7 @@
   "team@compliantdatasystems.com": "bounced",
   "info@everpayinc.com": "replied",
   "info@redguava.com.au": "replied",
-  "hello@dealflow.live": "bounced"
+  "hello@dealflow.live": "bounced",
+  "hello@merge.dev": "replied"
  }
 }
