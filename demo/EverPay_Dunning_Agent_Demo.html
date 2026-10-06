@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dunning Agent Demo</title>
+<meta name="description" content="Interactive mock-up of an OpenClaw-based payment recovery agent with human approval, audit log and gateway-routed tool calls. Sample data only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>body{margin:0}
+/* Layout: ops console. Header strip, then a two-column work area (queue + detail) above a guardrails / audit row. Stacks to one column on phones. */
+:root{
+  --bg:#f3f5f6; --surface:#ffffff; --sunk:#e9eef0; --line:#d5dde1;
+  --fg:#16232b; --muted:#5a6b74; --accent:#0d6b73; --accent-ink:#ffffff; --accent-soft:#d9eef0;
+  --ok:#1f7a45; --ok-soft:#dcf1e4; --warn:#9a5b00; --warn-soft:#fbecd2; --bad:#b0312a; --bad-soft:#f8dcd9;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r:8px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f171b; --surface:#16222a; --sunk:#1c2b33; --line:#2b3d47;
+  --fg:#e3ecef; --muted:#93a6af; --accent:#4fb8bf; --accent-ink:#06191b; --accent-soft:#163a3e;
+  --ok:#5cc98a; --ok-soft:#14321f; --warn:#e6a94a; --warn-soft:#3a2a10; --bad:#ef7d74; --bad-soft:#3d1a18;
+  color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0f171b; --surface:#16222a; --sunk:#1c2b33; --line:#2b3d47;
+  --fg:#e3ecef; --muted:#93a6af; --accent:#4fb8bf; --accent-ink:#06191b; --accent-soft:#163a3e;
+  --ok:#5cc98a; --ok-soft:#14321f; --warn:#e6a94a; --warn-soft:#3a2a10; --bad:#ef7d74; --bad-soft:#3d1a18;
+  color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;line-height:1.5;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:20px 40px;display:grid;gap:16px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:1.75rem}
+h2{font-size:1.05rem}
+.eyebrow{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.banner{background:var(--warn-soft);color:var(--warn);border-radius:var(--r);padding:8px 12px;font-size:.85rem;font-weight:500}
+header.top{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between}
+header.top p{margin:6px 0 0;max-width:62ch;color:var(--muted)}
+.btn{font:600 .85rem var(--f-body);border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:7px 12px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.ok{color:var(--ok);border-color:var(--ok)}
+.btn.bad{color:var(--bad);border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.kpi .v{font:600 1.4rem var(--f-mono);font-variant-numeric:tabular-nums;margin-top:2px}
+.work{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:12px;align-content:start;min-width:0}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{text-align:left;font-weight:600;color:var(--muted);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--line)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.row{cursor:pointer}
+tr.row:hover td{background:var(--sunk)}
+tr.row.sel td{background:var(--accent-soft)}
+.pill{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.p-new{background:var(--sunk);color:var(--muted)}
+.p-wait{background:var(--warn-soft);color:var(--warn)}
+.p-ok{background:var(--ok-soft);color:var(--ok)}
+.p-bad{background:var(--bad-soft);color:var(--bad)}
+.draft{background:var(--sunk);border-radius:6px;padding:12px;white-space:pre-wrap;font-size:.85rem;max-width:65ch}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:.85rem}
+dl.facts dt{color:var(--muted)}
+dl.facts dd{margin:0}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.lower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+ul.guard{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+ul.guard li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.tick{width:18px;height:18px;border-radius:4px;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-size:.75rem;font-weight:700;margin-top:1px}
+.log{font:400 .78rem/1.6 var(--f-mono);background:var(--sunk);border-radius:6px;padding:10px;max-height:260px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+.gw{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font:500 .78rem var(--f-mono)}
+.gw span{background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:3px 7px}
+.gw span.hl{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.gw i{font-style:normal;color:var(--muted)}
+footer{font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
+@media (max-width:860px){.work,.lower{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:no-preference){tr.row td{transition:background .15s}}
+</style>
+
+</head><body>
+<div class="wrap">
+  <div class="banner">Interactive mock-up with sample data. It is not connected to any live system, and every merchant and amount below is made up.</div>
+
+  <header class="top">
+    <div>
+      <div class="eyebrow">Prepared for EverPay · Payment recovery agent</div>
+      <h1>Dunning Agent Demo</h1>
+      <p>This is what a merchant's billing team would see each morning. The agent reads failed payments and overdue invoices, proposes the next step and drafts the message. Nothing goes out until a person approves it, and every step is logged.</p>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="run">Run morning pass</button>
+      <button class="btn" id="reset">Reset demo</button>
+    </div>
+  </header>
+
+  <section class="kpis" aria-label="Summary">
+    <div class="kpi"><div class="eyebrow">Open exceptions</div><div class="v" id="k-open">0</div></div>
+    <div class="kpi"><div class="eyebrow">Awaiting approval</div><div class="v" id="k-wait">0</div></div>
+    <div class="kpi"><div class="eyebrow">Approved today</div><div class="v" id="k-ok">0</div></div>
+    <div class="kpi"><div class="eyebrow">At risk (USD)</div><div class="v" id="k-amt">0.00</div></div>
+  </section>
+
+  <section class="work">
+    <div class="panel">
+      <div class="panel-head"><h2>Exception queue</h2><span class="muted" style="font-size:.8rem">Select a row to review it</span></div>
+      <div class="tbl"><table>
+        <thead><tr><th>Invoice</th><th>Merchant / customer</th><th>Issue</th><th style="text-align:right">Amount</th><th>Status</th></tr></thead>
+        <tbody id="queue"></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel" id="detail">
+      <div class="panel-head"><h2 id="d-title">No item selected</h2><span id="d-pill"></span></div>
+      <p class="muted" id="d-empty">Run the morning pass, then pick an item from the queue to see the agent's proposal.</p>
+      <div id="d-body" hidden>
+        <dl class="facts" id="d-facts"></dl>
+        <div style="display:grid;gap:6px;margin-top:12px">
+          <div class="eyebrow">Proposed next step</div>
+          <div id="d-plan"></div>
+        </div>
+        <div style="display:grid;gap:6px;margin-top:12px">
+          <div class="eyebrow">Draft message to customer</div>
+          <div class="draft" id="d-draft"></div>
+        </div>
+        <div class="actions" style="margin-top:12px">
+          <button class="btn ok" id="approve">Approve and send</button>
+          <button class="btn bad" id="reject">Reject</button>
+          <button class="btn" id="escalate">Escalate to billing team</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="panel">
+      <h2>Guardrails in this setup</h2>
+      <ul class="guard">
+        <li><span class="tick">✓</span><div><strong>Least-privilege scopes.</strong> <span class="muted">The agent can read invoice and payment status and create drafts. It cannot issue refunds, change prices or touch account settings.</span></div></li>
+        <li><span class="tick">✓</span><div><strong>No card data.</strong> <span class="muted">It sees invoice and payment metadata only, never card numbers or credentials.</span></div></li>
+        <li><span class="tick">✓</span><div><strong>Human approval.</strong> <span class="muted">Payment retries and customer messages wait in a queue until someone approves them.</span></div></li>
+        <li><span class="tick">✓</span><div><strong>Routed through your gateway.</strong> <span class="muted">Tool calls go to one configurable gateway endpoint, so a policy layer such as Magertron can enforce its own rules, logs and spend limits. This path has not been tested against Magertron yet.</span></div>
+        </li>
+        <li><span class="tick">✓</span><div><strong>Full audit trail.</strong> <span class="muted">Every read, draft and decision is logged with a timestamp and who made it.</span></div></li>
+      </ul>
+      <div class="gw" aria-label="Request path"><span>Agent</span><i>→</i><span class="hl">Your gateway</span><i>→</i><span>Billing API</span><i>→</i><span>Approval queue</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>Audit log</h2><span class="muted mono" style="font-size:.75rem" id="log-count">0 entries</span></div>
+      <div class="log" id="log" aria-live="polite">No activity yet.</div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Daily exceptions summary</h2><span class="muted" style="font-size:.8rem">Sent to the billing team at 08:00</span></div>
+    <div class="draft" id="summary" style="max-width:none">Run the morning pass to generate today's summary.</div>
+  </section>
+
+  <footer>
+    <span>Victor Nweze · AI Automation Specialist</span>
+    <span>Built on OpenClaw · sample data only</span>
+  </footer>
+</div>
+
+<script>
+const SEED = [
+  {id:"INV-20417", merchant:"Harbor Yoga Studio", customer:"M. Clarke", issue:"Card declined (insufficient funds)", kind:"decline", amount:89.00, days:2, attempts:1,
+   plan:"Retry the charge in 48 hours, after the customer's usual payday. Send a short heads-up now.",
+   draft:"Hi M. Clarke,\n\nYour Harbor Yoga Studio membership payment of $89.00 didn't go through on the first try. We'll try again in two days. If you'd like to use a different card, you can update it here: [secure update link]\n\nThanks,\nHarbor Yoga Studio"},
+  {id:"INV-20388", merchant:"Northside Auto Parts", customer:"Delta Fleet LLC", issue:"Invoice 14 days overdue", kind:"overdue", amount:1240.50, days:14, attempts:0,
+   plan:"Send a second reminder with the invoice attached. If unpaid at 21 days, hand over to the billing team.",
+   draft:"Hello Delta Fleet team,\n\nA quick reminder that invoice INV-20388 for $1,240.50 was due 14 days ago. A copy is attached. If it's already been paid, please ignore this note, or reply with the remittance details so we can match it.\n\nBest regards,\nNorthside Auto Parts accounts"},
+  {id:"INV-20402", merchant:"Kettle & Crumb Bakery", customer:"J. Ortiz", issue:"Card expired", kind:"expired", amount:42.00, days:1, attempts:1,
+   plan:"Don't retry, because an expired card will fail again. Ask the customer to update their card.",
+   draft:"Hi J. Ortiz,\n\nThe card we have on file for your Kettle & Crumb subscription has expired, so this week's $42.00 payment couldn't be taken. You can add a new card here: [secure update link]\n\nThank you,\nKettle & Crumb Bakery"},
+  {id:"INV-20355", merchant:"Brightline Tutoring", customer:"S. Patel", issue:"Disputed charge flagged", kind:"dispute", amount:310.00, days:6, attempts:0,
+   plan:"Disputes are outside the agent's remit. No message drafted. Escalate to a person.",
+   draft:"(No customer message. Disputes always go to a person.)"},
+  {id:"INV-20421", merchant:"Harbor Yoga Studio", customer:"R. Nguyen", issue:"Card declined (do not honor)", kind:"decline", amount:89.00, days:0, attempts:1,
+   plan:"The bank declined it with no reason given. Retry once tomorrow, then ask for a different card if it fails again.",
+   draft:"Hi R. Nguyen,\n\nYour bank declined today's $89.00 membership payment. We'll try once more tomorrow. If it fails again, we'll ask you for another card.\n\nThanks,\nHarbor Yoga Studio"}
+];
+let items=[], sel=null, log=[];
+const $=id=>document.getElementById(id);
+const fmt=n=>n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const stamp=()=>new Date().toISOString().slice(11,19)+"Z";
+const pill={new:["p-new","New"],wait:["p-wait","Awaiting approval"],ok:["p-ok","Approved"],bad:["p-bad","Rejected"],esc:["p-bad","Escalated"]};
+
+function addLog(actor,msg){log.push(`${stamp()}  ${actor.padEnd(6)}  ${msg}`);$("log").textContent=log.join("\n");$("log-count").textContent=log.length+" entries";$("log").scrollTop=1e9}
+
+function render(){
+  $("queue").innerHTML=items.length?items.map(it=>{const [c,t]=pill[it.status];return `<tr class="row${sel===it.id?" sel":""}" data-id="${it.id}" tabindex="0"><td class="mono">${it.id}</td><td>${it.merchant}<div class="muted" style="font-size:.78rem">${it.customer}</div></td><td>${it.issue}</td><td class="mono" style="text-align:right">$${fmt(it.amount)}</td><td><span class="pill ${c}">${t}</span></td></tr>`}).join(""):`<tr><td colspan="5" class="muted">Queue is empty. Select “Run morning pass” to load today's exceptions.</td></tr>`;
+  document.querySelectorAll("tr.row").forEach(r=>{r.onclick=()=>select(r.dataset.id);r.onkeydown=e=>{if(e.key==="Enter")select(r.dataset.id)}});
+  const open=items.filter(i=>i.status==="wait"||i.status==="new");
+  $("k-open").textContent=open.length;
+  $("k-wait").textContent=items.filter(i=>i.status==="wait").length;
+  $("k-ok").textContent=items.filter(i=>i.status==="ok").length;
+  $("k-amt").textContent=fmt(open.reduce((s,i)=>s+i.amount,0));
+  const it=items.find(i=>i.id===sel);
+  $("d-empty").hidden=!!it;$("d-body").hidden=!it;
+  if(!it){$("d-title").textContent="No item selected";$("d-pill").innerHTML="";return}
+  $("d-title").textContent=it.id+" · "+it.merchant;
+  const [c,t]=pill[it.status];$("d-pill").innerHTML=`<span class="pill ${c}">${t}</span>`;
+  $("d-facts").innerHTML=`<dt>Customer</dt><dd>${it.customer}</dd><dt>Issue</dt><dd>${it.issue}</dd><dt>Amount</dt><dd class="mono">$${fmt(it.amount)}</dd><dt>Days outstanding</dt><dd class="mono">${it.days}</dd><dt>Retry attempts</dt><dd class="mono">${it.attempts}</dd>`;
+  $("d-plan").textContent=it.plan;$("d-draft").textContent=it.draft;
+  const done=it.status!=="wait";
+  $("approve").disabled=done||it.kind==="dispute";$("reject").disabled=done;$("escalate").disabled=done;
+}
+function select(id){sel=id;const it=items.find(i=>i.id===id);addLog("user",`opened ${id}`);render()}
+function summary(){
+  const open=items.filter(i=>i.status==="wait");
+  const by=k=>items.filter(i=>i.kind===k).length;
+  $("summary").textContent=`Payment exceptions for ${new Date().toISOString().slice(0,10)}\n\n${items.length} exceptions found, $${fmt(items.reduce((s,i)=>s+i.amount,0))} at risk.\n- Card declines: ${by("decline")} (retries scheduled, pending approval)\n- Expired cards: ${by("expired")} (card update requested)\n- Overdue invoices: ${by("overdue")} (second reminder drafted)\n- Disputes: ${by("dispute")} (escalated, no message sent)\n\n${open.length} items are waiting for your approval in the queue.`;
+}
+$("run").onclick=()=>{
+  items=SEED.map(s=>({...s,status:"new"}));sel=null;log=[];
+  addLog("agent","morning pass started via gateway");
+  addLog("agent","GET /invoices?status=failed,overdue  (scope: invoices.read)");
+  items.forEach(it=>{
+    if(it.kind==="dispute"){it.status="esc";addLog("agent",`${it.id} dispute detected -> escalated, no draft`)}
+    else{it.status="wait";addLog("agent",`${it.id} draft created, queued for approval`)}
+  });
+  addLog("agent","daily summary generated");
+  summary();sel=items[0].id;render();
+};
+$("reset").onclick=()=>{items=[];sel=null;log=[];$("log").textContent="No activity yet.";$("log-count").textContent="0 entries";$("summary").textContent="Run the morning pass to generate today's summary.";render()};
+$("approve").onclick=()=>{const it=items.find(i=>i.id===sel);it.status="ok";addLog("user",`approved ${it.id}`);addLog("agent",`${it.id} message sent${it.kind==="decline"?", retry scheduled":""}`);render()};
+$("reject").onclick=()=>{const it=items.find(i=>i.id===sel);it.status="bad";addLog("user",`rejected ${it.id}, nothing sent`);render()};
+$("escalate").onclick=()=>{const it=items.find(i=>i.id===sel);it.status="esc";addLog("user",`escalated ${it.id} to billing team`);render()};
+$("run").click();
+</script>
+
+</body></html>
