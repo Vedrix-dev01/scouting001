@@ -294,6 +294,13 @@
    "msg": "1a111716f7d13641",
    "thread": "1a111716f7d13641",
    "sent_at": "2026-10-06T13:40:13.001973+00:00"
+  },
+  "28": {
+   "email": "tej@farpay.io",
+   "company": "FarPay",
+   "msg": "1a1119fd1e04d787",
+   "thread": "1a1119fd1e04d787",
+   "sent_at": "2026-10-06T14:30:55.651961+00:00"
   }
  },
  "status": {
@@ -305,6 +312,7 @@
   "info@janeapp.com": "bounced",
   "team@compliantdatasystems.com": "bounced",
   "info@everpayinc.com": "replied",
-  "info@redguava.com.au": "replied"
+  "info@redguava.com.au": "replied",
+  "hello@dealflow.live": "bounced"
  }
 }
