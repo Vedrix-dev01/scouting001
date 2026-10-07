@@ -525,6 +525,13 @@
    "msg": "1a117872240ecfc8",
    "thread": "1a117872240ecfc8",
    "sent_at": "2026-10-07T18:01:38.694366+00:00"
+  },
+  "124": {
+   "email": "sam@paygentic.io",
+   "company": "Paygentic",
+   "msg": "1a117a0560e176f4",
+   "thread": "1a117a0560e176f4",
+   "sent_at": "2026-10-07T18:29:10.279924+00:00"
   }
  },
  "status": {
@@ -540,6 +547,7 @@
   "hello@dealflow.live": "bounced",
   "hello@merge.dev": "replied",
   "info@brang.fi": "replied",
-  "hello@paidapi.com": "bounced"
+  "hello@paidapi.com": "bounced",
+  "team@paigo.tech": "bounced"
  }
 }
