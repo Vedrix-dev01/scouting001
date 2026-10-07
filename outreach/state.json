@@ -434,6 +434,13 @@
    "msg": "1a115c34596c61d0",
    "thread": "1a115c34596c61d0",
    "sent_at": "2026-10-07T09:48:05.122780+00:00"
+  },
+  "31": {
+   "email": "support@flowinvoicing.fi",
+   "company": "Flow Invoicing",
+   "msg": "1a115eb358bfd35b",
+   "thread": "1a115eb358bfd35b",
+   "sent_at": "2026-10-07T10:31:43.936214+00:00"
   }
  },
  "status": {
@@ -447,6 +454,7 @@
   "info@everpayinc.com": "replied",
   "info@redguava.com.au": "replied",
   "hello@dealflow.live": "bounced",
-  "hello@merge.dev": "replied"
+  "hello@merge.dev": "replied",
+  "info@brang.fi": "replied"
  }
 }
