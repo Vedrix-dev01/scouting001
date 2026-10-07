@@ -518,6 +518,13 @@
    "msg": "1a11769266071788",
    "thread": "1a11769266071788",
    "sent_at": "2026-10-07T17:28:53.483172+00:00"
+  },
+  "123": {
+   "email": "team@paigo.tech",
+   "company": "Paigo",
+   "msg": "1a117872240ecfc8",
+   "thread": "1a117872240ecfc8",
+   "sent_at": "2026-10-07T18:01:38.694366+00:00"
   }
  },
  "status": {
@@ -532,6 +539,7 @@
   "info@redguava.com.au": "replied",
   "hello@dealflow.live": "bounced",
   "hello@merge.dev": "replied",
-  "info@brang.fi": "replied"
+  "info@brang.fi": "replied",
+  "hello@paidapi.com": "bounced"
  }
 }
