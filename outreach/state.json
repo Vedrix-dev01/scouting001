@@ -567,6 +567,13 @@
    "msg": "1a11b125952760e4",
    "thread": "1a11b125952760e4",
    "sent_at": "2026-10-08T10:32:32.653593+00:00"
+  },
+  "40": {
+   "email": "yann@flowie.fr",
+   "company": "Flowie",
+   "msg": "1a11b9738e0b8cd7",
+   "thread": "1a11b9738e0b8cd7",
+   "sent_at": "2026-10-08T12:57:41.013442+00:00"
   }
  },
  "status": {
