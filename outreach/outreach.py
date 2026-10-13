@@ -20,7 +20,7 @@ def save(): json.dump(S,open(SP,"w"),indent=1)
 def now(): return datetime.now(timezone.utc)
 def cap(t):
     d=(t.date()-datetime.fromisoformat(S["start"]).date()).days
-    return 20 if d<7 else 30 if d<14 else 40
+    return 20 if d<7 else 30  # held at 30/day per user (Oct 13); no step-up to 40
 def sent_today(t): return sum(1 for v in S["sent"].values() if v["sent_at"][:10]==t.strftime("%Y-%m-%d"))
 def open_(item,t):
     lt=t.astimezone(ZoneInfo(TZ.get(item["country"],"Europe/Berlin")))
