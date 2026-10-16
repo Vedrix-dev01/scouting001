@@ -1099,6 +1099,13 @@
    "msg": "1a14693274f96b96",
    "thread": "1a14693274f96b96",
    "sent_at": "2026-10-16T21:17:02.194567+00:00"
+  },
+  "374": {
+   "email": "hello@digits.com",
+   "company": "Digits",
+   "msg": "1a146d8ec1e4bcfc",
+   "thread": "1a146d8ec1e4bcfc",
+   "sent_at": "2026-10-16T22:33:17.811550+00:00"
   }
  },
  "status": {
