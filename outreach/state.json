@@ -1036,6 +1036,13 @@
    "msg": "1a14406f9f143646",
    "thread": "1a14406f9f143646",
    "sent_at": "2026-10-16T09:24:33.706745+00:00"
+  },
+  "54": {
+   "email": "support@rechnungsapi.de",
+   "company": "Finbc GmbH (RechnungsAPI)",
+   "msg": "1a144271902fadcb",
+   "thread": "1a144271902fadcb",
+   "sent_at": "2026-10-16T09:59:38.740899+00:00"
   }
  },
  "status": {
