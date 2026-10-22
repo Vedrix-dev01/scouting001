@@ -30,6 +30,9 @@ cmd=sys.argv[1]
 if cmd=="next":
     t=now(); p=pending()
     if not p: print(json.dumps({"done":True})); sys.exit()
+    # Victor, 22 Oct 2026: cold emails were landing in spam; no new leads for 2 weeks.
+    if t<datetime(2026,11,5,tzinfo=timezone.utc):
+        print(json.dumps({"paused_until":"2026-11-05","reason":"spam risk, paused by Victor"})); sys.exit()
     if sent_today(t)>=cap(t):
         nxt=(t+timedelta(days=1)).replace(hour=0,minute=5,second=0,microsecond=0)
         print(json.dumps({"wait_until":nxt.isoformat(),"reason":"daily cap reached"})); sys.exit()

@@ -1,4 +1,6 @@
 # Outreach runbook (each scheduled wake-up)
+
+**PAUSED until 5 Nov 2026 (Victor, 22 Oct): cold emails were going to spam. Send nothing to new leads; replies to existing threads only.**
 Sender: Victor Nweze (connected Gmail). Lists: invoice "ready" rows first, then German real estate "ready" rows (outreach/queue.json).
 Pace: one email per wake, next wake 20–35 min later; Mon–Fri 09:00–17:00 recipient local time; daily cap 20 (week 1), 30 (week 2), 40 after.
 
